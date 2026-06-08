@@ -1,44 +1,52 @@
 def add_expense():
-    date = input("Enter date: (DD/MM/YYYY) ")
+    print("Example - DD/MM/YY")
+    date = input("Enter date: ")
     amount = input("Enter amount: ")
+    print("Options - Food/Transport/Entertainment/Others")
     category = input("Enter category: ")
-    note = input("Enter note: ")
+    choice_for_note = input("Would you like to write a Note? (y/n): ")
+    if choice_for_note.lower() == "y":
+        note = input("Enter note: ")
+    else:
+        note = "N/A"
 
     with open("data.txt", "a") as file:
         file.write(f"{date},{category},{amount},{note}\n")
     
-
 def view_All_expenses():
-    sum = 0
+    total = 0
 
-    print("Date\tCategory\tAmount\tNote")
+    print(f"{'Date':<12}{'Category':<13}{'Amount':<10}{'Note'}")
     print("-" * 50)
 
     with open("data.txt", "r") as file:
         for line in file:
             date, category, amount, note = line.strip().split(",")
 
-            print(f"{date}\t{category}\t{amount}\t{note}")
+            print(f"{date:<12}{category:<13}{amount:<10}{note}")
 
-            sum += float(amount)
+            total += float(amount)
 
-    print("-" * 35)
-    print(sum)
+    print("-" * 50)
+    print("Total =", total)
 
 def filter_by_category():
     search = input("Enter category: ")
-    sum = 0
+    subtotal = 0
+
+    print(f"{'Date':<12}{'Category':<13}{'Amount':<10}{'Note'}")
+    print("-" * 50)
 
     with open("data.txt" , "r") as file:
         for line in file:
             date, category, amount, note = line.strip().split(",")
 
             if category.lower() == search.lower():
-                print(f"{date}\t{category}\t{amount}\t{note}")
-                sum += float(amount)
-    
+                print(f"{date:<12}{category:<13}{amount:<10}{note}")
+                subtotal += float(amount)
 
-    print(sum)
+    print("-" * 50)
+    print("Subtotal =", subtotal)
 
 while True:
     print("\n1. Add an Expense")
@@ -46,14 +54,16 @@ while True:
     print("3. Filter by Category")
     print("4. Exit")
 
-    inp = input("input: ")
+    User_Input = input("input: ")
 
-    if inp == "1":
+    if User_Input == "1":
         add_expense()
-    elif inp == "2":
+    elif User_Input == "2":
         view_All_expenses()
-    elif inp == "3":
+    elif User_Input == "3":
         filter_by_category()
-    elif inp == "4":
+    elif User_Input == "4":
+        print("Thanks For Visiting!")
         break
+    else : print("Invalid Option")
     
